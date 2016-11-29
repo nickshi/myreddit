@@ -5,13 +5,13 @@
  */
 
 import React, { Component } from 'react';
-import App from './src/app';
+import App from './app';
 import {
   AppRegistry,
   StyleSheet,
 } from 'react-native';
 
-class ShadowEnglish extends Component {
+class Reddit extends Component {
   render() {
     return (
       <App />
@@ -19,4 +19,4 @@ class ShadowEnglish extends Component {
   }
 }
 
-AppRegistry.registerComponent('ShadowEnglish', () => ShadowEnglish);
+AppRegistry.registerComponent('ShadowEnglish', () => Reddit);
