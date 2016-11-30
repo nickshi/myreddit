@@ -3,43 +3,55 @@ import {
 } from 'react-native';
 const styles = StyleSheet.create({
   container: {
-    //alignSelf: "stretch",
     flex: 1,
-    borderWidth: 1,
-    borderColor: 'red'
   },
 
   itemContainer: {
+    flexDirection: 'column',
+    alignItems: 'stretch',
+    justifyContent: 'center',
+    backgroundColor: 'white',
+  },
+
+  itemContent: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: 'white',
-    borderBottomColor: '#ddd',
-    borderBottomWidth: 1,
-    padding: 10
+    padding: 5,
+    paddingLeft: 10,
+    paddingRight: 10,
   },
 
   itemImage: {
     width: 88,
     height: 88,
     //borderRadius: 44,
-    marginRight: 10,
+    margin: 5,
+
   },
 
-  itemRight: {
-    flexDirection: 'column',
+  itemHead: {
     flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    height: 20,
+    backgroundColor: 'white',
+    borderBottomWidth: 1,
+    borderBottomColor: '#ddd'
   },
 
   title: {
-    fontSize: 18,
+    alignSelf: 'flex-start',
+    fontSize: 15,
     textAlign: 'left',
     flex: 3,
   },
 
-  info: {
+  itemFooter: {
     flexDirection: 'row',
-    marginTop: 5,
+    borderTopWidth: 1,
+    borderTopColor: '#ddd'
   },
 
   info_head: {

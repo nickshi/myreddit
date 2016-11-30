@@ -12,11 +12,12 @@ import {
 import {
   Actions,
 } from 'react-native-router-flux';
+
 import ScrollableTabView, { ScrollableTabBar } from 'react-native-scrollable-tab-view';
 import CustomTabBar from '../../components/CustomTabBar';
 import * as Alias from '../../constants/Alias';
 import styles from './styles';
-
+import moment from 'moment';
 const catids = [1];
 
 
@@ -67,7 +68,7 @@ class Home extends Component {
     if(item.data.url.lastIndexOf('gif') >= 0) {
       thumbnail = item.data.url;
     }
-    console.log('thumbnail ', thumbnail)
+    
     if(thumbnail == undefined && item.data.thumbnail.lastIndexOf("http") >= 0) {
       thumbnail = item.data.thumbnail;
     }
@@ -78,28 +79,40 @@ class Home extends Component {
         thumbnail = images[0].source.url;
       }
     }
-    thumbnail = 'http://www.clicktorelease.com/code/gif/1.gif';
+
+    let pre = item.data.permalink.split('/', 3).join('/');
+    let second = item.data.created;
+    let timeDes = moment(second * 1000).fromNow();
+
     return (
       <TouchableHighlight onPress = {()=>{
         //Actions.pageview({pageUrl: item.data.url})
       }}>
         <View style = { styles.itemContainer }>
-          <Image 
-            style = { styles.itemImage }
-            source = {{ uri: thumbnail }}
-          />
-          <View style = { styles.itemRight } >
+          <View style = { styles.itemHead }>
+            <Text style = {{}}>{pre}</Text>
+            <Text style = {{paddingLeft: 10}}>{timeDes}</Text>
+          </View>
+          <View style = { styles.itemContent }>
             <Text style = { styles.title }>{item.data.title}</Text>
-            <View style = { styles.info }>
-              <View style = {{ flex: 1, flexDirection: 'row'}}>
-                <Text style = { styles.info_head } >from:</Text>
-                <Text style = { styles.info_body }>{item.data.author}</Text>
-              </View>
-              <View style = {{ flex: 1, flexDirection: 'row'}}>
-                <Text style = { styles.info_head } >like:</Text>
-                <Text style = { styles.info_body }>{item.data.ups}</Text>
-              </View>
-            </View>
+            <Image 
+              style = { styles.itemImage }
+              source = {{ uri: thumbnail }}
+            />
+          </View>
+          <View style = { styles.itemFooter }>
+                <View style = {{ flex: 1, flexDirection: 'row'}}>
+                  <Text style = { styles.info_head } >from:</Text>
+                  <Text style = { styles.info_body }>{item.data.author}</Text>
+                </View>
+                <View style = {{ flex: 1, flexDirection: 'row'}}>
+                  <Text style = { styles.info_head } >like:</Text>
+                  <Text style = { styles.info_body }>{item.data.ups}</Text>
+                </View>
+          </View>
+
+          <View style = { {flex:1, height: 10,backgroundColor: '#ddd'} }>
+            
           </View>
         </View>
       </TouchableHighlight>
@@ -126,6 +139,7 @@ class Home extends Component {
         renderRow = { this.renderItem }
         renderHeader = { this.renderHeader }
         onEndReached = {()=> {this.onEndReached(categoryID)}}
+        contentInset={{top: 64, bottom: 49}}
         onEndReachedThreshold = { 10 }
         style = { styles.listView }
         refreshControl = {

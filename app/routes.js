@@ -4,14 +4,19 @@ import {
   Reducer,
   Scene,
   DefaultRenderer,
+  Modal,
 } from 'react-native-router-flux';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Text } from 'react-native';
+import { Text, View } from 'react-native';
 
 import HomeContainer from './routes/home';
+import InBoxContainer from './routes/inbox';
+import SearchContainer from './routes/search';
+import JoinContainer from './routes/join';
+import SignContainer from './routes/signup';
 import SideMenuContainer from './containers/SideMenuContainer';
-
+import Icon from 'react-native-vector-icons/Ionicons';
 import Drawer from 'react-native-drawer';
 
 
@@ -40,26 +45,35 @@ class RedditDrawer extends Component {
   }
 }
 
-const TabIcon = ({ selected, title }) => {
+const TabIcon = ({ selected, title, iconName }) => {
   return (
-    <Text style={{color: selected ? 'red' :'black'}}>{title}</Text>
+    <View style={{flex:1, alignItems:'center', justifyContent:'center'}}>
+      <Icon
+        name = { iconName }
+        size = { 30 }
+        color={selected ? '#F00' :'#AAA'}
+      />
+    </View>
   );
 }
 
 const scenes = Actions.create(
-    <Scene 
-      key = 'Tabs'
-      title = 'Tabs'
-      tabBarStyle={{ backgroundColor: '#FFFFFF',borderTopWidth:1, borderColor: 'gray' }}
-      tabs = { true }
-    >
-      <Scene key = "home" component = {HomeContainer} title = "Home" icon = {TabIcon} hideNavBar/>
-      <Scene key = "search" component = {HomeContainer} title = "Search" icon = {TabIcon} hideNavBar/>
-      <Scene key = "InBox" component = {HomeContainer} title = "InBox" icon = {TabIcon} hideNavBar/>
-      <Scene key = "nick_shi" component = {HomeContainer} title = "nick_shi" icon = {TabIcon} hideNavBar/>
+  <Scene key = 'modal' component={Modal}>
+    <Scene key = 'root'>
+      <Scene 
+        key = 'Tabs'
+        title = 'Tabs'
+        tabBarStyle={{ backgroundColor: '#FFFFFF',borderTopWidth:1, borderColor: 'gray' }}
+        tabs = { true }
+      >
+        <Scene key = "home" component = {HomeContainer} title = "Reddit" icon = {TabIcon} iconName={"logo-reddit"}/>
+        <Scene key = "search" component = {SearchContainer} title = "Search" icon = {TabIcon} hideNavBar iconName={"ios-search"}/>
+        <Scene key = "inbox" component = {InBoxContainer} title = "InBox" icon = {TabIcon}  iconName={"ios-mail"}/>
+        <Scene key = "join" component = {JoinContainer} title = "Join Reddit" icon = {TabIcon}  iconName={"ios-person"}/>
+      </Scene>
+      <Scene key = "sign" component = {SignContainer} direction="vertical" hideNavBar/>
     </Scene>
-  //</Scene>
-
+  </Scene>
 );
 
 class Routes extends Component {
