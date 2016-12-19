@@ -50,8 +50,6 @@ const styles = StyleSheet.create({
 		fontSize: 13,
 		color: 'blue',
 	},
-
-
 })
 export default class Sign extends Component {
 	constructor(props) {

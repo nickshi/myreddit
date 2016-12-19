@@ -1,18 +1,12 @@
 import * as ActionType from '../constants/ActionType';
-import  * as host from '../constants/Urls';
+import reddit from '../services/session/reddit';
 
 function fetchRedditList(isRefreshing, loading, isLoadMore, categoryID, count, after) {
   return dispatch => {
     dispatch(fetchReddit(isRefreshing, loading, isLoadMore));
-    const fUrl = host.BASE_URL 
-    + host.DOMAINS[categoryID] 
-    + '?count=' + count
-    + '&after=' + after;
-
-    return fetch(fUrl)
-    .then(response => response.json())
-    .then(redditData => {
-      dispatch(receiveReddit(redditData.data, categoryID, redditData.data.after));
+    return reddit.getHotReddit(count, after)
+    .then(jsonData => {
+      dispatch(receiveReddit(jsonData.data, categoryID, jsonData.data.after));
     })
     .catch(err => {
        dispatch(receiveReddit([], categoryID));

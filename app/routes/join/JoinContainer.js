@@ -7,7 +7,7 @@ import {
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import RedditActionCreators from '../../actions/reddit';
+import UserActionCreators from '../../actions/user';
 import Join from './Join';
 
 const styles = StyleSheet.create({
@@ -29,13 +29,13 @@ class JoinContainer extends Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    redditAction: bindActionCreators(RedditActionCreators, dispatch),
+    userAction: bindActionCreators(UserActionCreators, dispatch),
   };
 }
 
 function mapStateToProps(state) {
   return {
-    reddit: state.reddit,
+    user: state.user,
   };
 }
 

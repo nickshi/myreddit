@@ -13,6 +13,7 @@ import { Constant } from '../../constants';
 import {
   Actions,
 } from 'react-native-router-flux';
+
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
@@ -65,12 +66,42 @@ const styles = StyleSheet.create({
 export default class Join extends Component {
 	constructor (props) {
 		super(props);
+	}
 
+	login() {
+		let { userAction } = this.props;
+		userAction.authorizate(()=>{
+			Actions.home();
+		},() => {});
+	}
 
+	logout() {
+		let { userAction } = this.props;
+		userAction.logout();
 	}
 
 	render() {
-		console.log('images ', images)
+
+		let { user } = this.props;
+		let isLogin = user.access_token !== null;
+		const actionButton = !isLogin ? (<TouchableOpacity
+						onPress = {()=>{ this.login() }}
+					>
+						<View style = {styles.loginButton}>
+							<Text>
+								LOG IN
+							</Text>
+						</View>
+					</TouchableOpacity>) : (<TouchableOpacity
+						onPress = {()=>{ this.logout() }}
+					>
+						<View style = {styles.signupButton}>
+							<Text>
+								LOG OUT
+							</Text>
+						</View>
+					</TouchableOpacity>);
+
 		return(
 			<View style = {styles.container}>
 				<Image 
@@ -81,28 +112,7 @@ export default class Join extends Component {
 					Sign up to upvote the best content
 				</Text>
 				<View style = {styles.buttonGroup}>
-					<TouchableOpacity
-						onPress = {()=>{
-							Actions.sign();
-						}}
-					>
-						<View style = {styles.loginButton}>
-							<Text>
-								LOG IN
-							</Text>
-						</View>
-					</TouchableOpacity>
-
-					<TouchableOpacity
-						onPress = {()=>{}}
-					>
-						<View style = {styles.signupButton}>
-							<Text>
-								SIGN UP
-							</Text>
-						</View>
-					</TouchableOpacity>
-
+			  	{ actionButton }
 				</View>
 			</View>
 		);

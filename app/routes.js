@@ -64,7 +64,7 @@ const scenes = Actions.create(
         key = 'Tabs'
         title = 'Tabs'
         tabBarStyle={{ backgroundColor: '#FFFFFF',borderTopWidth:1, borderColor: 'gray' }}
-        tabs = { true }
+        tabs
       >
         <Scene key = "home" component = {HomeContainer} title = "Reddit" icon = {TabIcon} iconName={"logo-reddit"}/>
         <Scene key = "search" component = {SearchContainer} title = "Search" icon = {TabIcon} hideNavBar iconName={"ios-search"}/>
