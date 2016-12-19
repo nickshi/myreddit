@@ -15,11 +15,10 @@ import {
 
 import ScrollableTabView, { ScrollableTabBar } from 'react-native-scrollable-tab-view';
 import CustomTabBar from '../../components/CustomTabBar';
-import * as Alias from '../../constants/Alias';
+import OptionsMenu from '../../components/OptionsMenu';
 import styles from './styles';
 import moment from 'moment';
 const catids = [1];
-
 
 class Home extends Component {
 
@@ -29,7 +28,8 @@ class Home extends Component {
     this.state = {
       dataSource: new ListView.DataSource({
         rowHasChanged: (row1, row2) => row1 != row2,
-      })
+      }),
+      sortBy: 'Hot',
     };
 
     this.renderItem = this.renderItem.bind(this);
@@ -57,8 +57,31 @@ class Home extends Component {
     redditAction.fetchRedditList(false, false, true, cid, 20, reddit.redditAfter[cid]);
   }
 
+  onOptionSelect(option) {
+    this.setState({
+      sortBy: option.label
+    })
+  }
+
   renderHeader() {
-    return <View style={{backgroundColor:'#f9f7f9', justifyContent:'center', height:40}}><Text style={{color: 'gray', fontSize:10, textAlign:'left'}}>HOT POSTS</Text></View>
+    const options = [
+      { key: 1, section: true, label: 'SORT POSTS BY:', },
+      { key: 2, label: 'Hot', },
+      { key: 3, label: 'New', },
+      { key: 4, label: 'Top', },
+      { key: 5, label: 'Controversial', },
+    ];
+    
+    return (
+      <OptionsMenu
+        options = { options }
+        onSelect = {(option)=>{ this.onOptionSelect(option)}} 
+      >
+        <View style={{backgroundColor:'#f9f7f9', justifyContent:'center', height:40}}>
+          <Text style={{color: 'gray', fontSize:10, textAlign:'left'}}>{this.state.sortBy}</Text>
+        </View>
+      </OptionsMenu>
+    );
   }
 
   renderItem(item, seciontID, rowID) {
