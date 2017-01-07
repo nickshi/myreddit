@@ -1,3 +1,3 @@
 # myreddit
 
-This is a reddit client using react native
+This is a reddit client used reactntive to develop
